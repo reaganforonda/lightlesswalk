@@ -13,6 +13,10 @@ export default class LoginForm extends React.Component{
 
     handleInputChange(e) {
         this.setState({[e.target.name] : e.target.value});
+    };
+
+    handleFormSubmit(e) {
+        e.preventDefault();
     }
 
     render() {

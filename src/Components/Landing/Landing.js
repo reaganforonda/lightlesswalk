@@ -1,5 +1,6 @@
 import React from 'react';
 import {withRouter} from 'react-router-dom';
+import LoginForm from './LoginForm';
 
 export class Landing extends React.Component{
     constructor(props) {
@@ -13,7 +14,7 @@ export class Landing extends React.Component{
     render(){
         return (
             <div>
-                LANDING PAGE
+                <LoginForm/>
             </div>
         )
     }
