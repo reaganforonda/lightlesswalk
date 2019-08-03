@@ -1,4 +1,5 @@
 import React from 'react';
+import {withRouter} from 'react-router-dom';
 
 export class Landing extends React.Component{
     constructor(props) {
@@ -18,3 +19,4 @@ export class Landing extends React.Component{
     }
 }
 
+export default withRouter(Landing);
