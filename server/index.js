@@ -11,8 +11,13 @@ dotenv.config();
 
 const {
     SERVER_PORT,
+    CONNECTION_STRING
 } = process.env;
 
+
+massive(CONNECTION_STRING).then((dbInstance) =>  {
+    app.set('db', dbInstance);
+});
 
 app.use(bodyParser.json());
 app.use(cors());
