@@ -9,6 +9,9 @@ export default class LoginForm extends React.Component{
             email: '',
             password: ""
         }
+
+        this.handleInputChange = this.handleInputChange.bind(this);
+        this.handleFormSubmit = this.handleFormSubmit.bind(this);
     }
 
     handleInputChange(e) {
