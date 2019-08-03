@@ -6,6 +6,6 @@ const reducers = {
 
 }
 
-let middleware = promiseMiddleware();
+let middleware = promiseMiddleware
 
 export default createStore(combineReducers(reducers), applyMiddleware(middleware));
