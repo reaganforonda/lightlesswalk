@@ -1,3 +1,4 @@
+DROP TABLE IF EXISTS groups;
 DROP TABLE IF EXISTS friends;
 DROP TABLE IF EXISTS users;
 
@@ -11,7 +12,12 @@ CREATE TABLE users
 );
 
 CREATE TABLE friends
-
 (
+    user_id INTEGER REFERENCES users(user_id)
+);
+
+CREATE TABLE groups
+(
+    group_id SERIAL PRIMARY KEY,
     user_id INTEGER REFERENCES users(user_id)
 );
