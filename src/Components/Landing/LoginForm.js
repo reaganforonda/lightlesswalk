@@ -21,7 +21,7 @@ export default class LoginForm extends React.Component{
 
     render() {
         return (
-            <form>
+            <form onSubmit={(e)=>this.handleFormSubmit(e)}>
                 <div>
                     <input name='email' type='email' placeholder='Email' 
                         onChange={(e)=>this.handleInputChange(e)}/>
@@ -31,7 +31,7 @@ export default class LoginForm extends React.Component{
                         onChange={(e)=>this.handleInputChange(e)} />
                 </div>
                 <div>
-                    <button>Log In</button>
+                    <button onClick={(e)=>this.handleFormSubmit(e)}>Log In</button>
                 </div>
             </form>
         )
