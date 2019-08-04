@@ -29,5 +29,25 @@ module.exports = {
                 })
             }
         })
+    },
+
+    login: (req, res) => {
+        const db = req.app.get('db');
+        const {email, pw} = req.body;
+
+        db.CHECK_USER([email.toLowerCase()]).then((user) => {
+            if(user.length === 0) {
+                res.sendStatus(400);
+            } else {
+                const email = user[0].email;
+                const userPW = user[0].pw;
+
+                const confirmedPW = bcrypt.compareSync(pw, userPW);
+
+                if(confirmedPW) {
+                    
+                }
+            }
+        })
     }
 }
