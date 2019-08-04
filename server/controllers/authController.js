@@ -3,13 +3,14 @@ const bcrypt = require('bcrypt');
 
 module.exports = {
     register: async (req, res, next) => {
+        console.log('hit');
         const db = req.app.get('db');
         const {userName, firstName, lastName, email, pw, confirmPW} = req.body;
 
-        db.CHECK_EMAIL([email.toLowerCase()]).then((users)=> {
+        db.CHECK_USER([email.toLowerCase()]).then((users)=> {
             if(users.length !== 0) {
                 if(users[0].email === email.toLowerCase()) {
-                    res.sendStatus(400);
+                    res.status(400).send("Please Login");
                 } else {
                     res.sendStatus(401);
                 }

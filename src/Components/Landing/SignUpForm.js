@@ -1,4 +1,5 @@
 import React from 'react';
+import axios from 'axios';
 
 export default class SignUpForm extends React.Component{
     constructor(props) {
@@ -10,7 +11,8 @@ export default class SignUpForm extends React.Component{
             firstName: '',
             lastName: '',
             password:'',
-            confirmPW: ''
+            confirmPW: '',
+            displayPWError: false
         }
 
         this.handleInputChange = this.handleInputChange.bind(this);
@@ -22,9 +24,19 @@ export default class SignUpForm extends React.Component{
     }
 
     handleFormSubmit(e) {
-        console.log(this.state);
-        this.prevenDefault(e);
+        e.preventDefault();
         
+        if(this.state.password === this.state.confirmPW) {
+            let user = Object.assign({}, this.state);
+            
+            axios.post('/api/auth/register', user).then(()=> {
+                
+            }).catch((err) => {
+                console.log(err.response.data);
+            })
+        } else {
+            this.setState({displayPWError: true});
+        }
     }
 
     render(){
@@ -54,6 +66,9 @@ export default class SignUpForm extends React.Component{
                 <div>
                     <input name='confirmPW' type='password' placeholder='Confirm Password'
                         onChange={(e)=>this.handleInputChange(e)} />
+                        {
+                            !this.state.displayPWError ? null : <p>Password Does Not Match</p>
+                        }
                 </div>
                 <div>
                     <button onClick={(e)=>this.handleFormSubmit(e)}>Sign Up</button>
