@@ -17,6 +17,7 @@ export default class SignUpForm extends React.Component{
 
         this.handleInputChange = this.handleInputChange.bind(this);
         this.handleFormSubmit = this.handleFormSubmit.bind(this);
+        this.resetForm = this.resetForm.bind(this);
     }
 
     handleInputChange(e) {
@@ -37,6 +38,18 @@ export default class SignUpForm extends React.Component{
         } else {
             this.setState({displayPWError: true});
         }
+    }
+
+    resetForm() {
+        this.setState({
+            email: '',
+            userName: '',
+            firstName: '',
+            lastName: '',
+            password:'',
+            confirmPW: '',
+            displayPWError: false
+        })
     }
 
     render(){
