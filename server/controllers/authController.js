@@ -45,9 +45,13 @@ module.exports = {
                 const confirmedPW = bcrypt.compareSync(pw, userPW);
 
                 if(confirmedPW) {
-                    
+                    // TODO:
+                    res.sendStatus(200);
                 }
             }
+        }).catch((err) => {
+            console.log(`Error while attemptint to login: ${err}`)
+            res.sendStatus(500);
         })
     }
 }
