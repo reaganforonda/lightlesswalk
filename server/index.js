@@ -33,6 +33,7 @@ app.use(
     })
 )
 
+app.use(middlewares.checkSession);
 
 // AUTH ENDPOINTS
 app.post('/api/auth/register', authController.register);
