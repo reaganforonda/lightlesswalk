@@ -31,13 +31,13 @@ export default class SignUpForm extends React.Component{
             let user = Object.assign({}, this.state);
             
             axios.post('/api/auth/register', user).then(()=> {
-                axios.post('/api/autho/login', user).then(()=> {
-                    console.log('Works');
-                }).catch((err) => {
-                    console.log(err.response.data);
-                })
+                // axios.post('/api/autho/login', user).then(()=> {
+                //     console.log('Works');
+                // }).catch((err) => {
+                //     console.log(err.response.data);
+                // })
             }).catch((err) => {
-                console.log(err.response.data);
+                console.log(err.response);
             })
         } else {
             this.setState({displayPWError: true});

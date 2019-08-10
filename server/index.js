@@ -15,14 +15,15 @@ const {
     CONNECTION_STRING
 } = process.env;
 
+app.use(bodyParser.json());
+app.use(cors());
+app.use(express.static(`${__dirname}/../build`));
+
 
 massive(CONNECTION_STRING).then((dbInstance) =>  {
     app.set('db', dbInstance);
 });
 
-app.use(bodyParser.json());
-app.use(cors());
-app.use(express.static(`${__dirname}/../build`));
 
 // AUTH ENDPOINTS
 app.post('/api/auth/register', authController.register);
