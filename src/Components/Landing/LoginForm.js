@@ -20,6 +20,14 @@ export default class LoginForm extends React.Component{
 
     handleFormSubmit(e) {
         e.preventDefault();
+
+        let user=Object.assign({}, this.state);
+
+        axios.post('/api/auth/login', user).then(()=> {
+            console.log("success");
+        }).catch((err) => {
+            console.log(err.response.data)
+        })
     }
 
     render() {
