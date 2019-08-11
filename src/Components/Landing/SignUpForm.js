@@ -7,7 +7,6 @@ export default class SignUpForm extends React.Component{
 
         this.state = {
             email: '',
-            userName: '',
             firstName: '',
             lastName: '',
             password:'',
@@ -31,11 +30,11 @@ export default class SignUpForm extends React.Component{
             let user = Object.assign({}, this.state);
             
             axios.post('/api/auth/register', user).then(()=> {
-                // axios.post('/api/autho/login', user).then(()=> {
-                //     console.log('Works');
-                // }).catch((err) => {
-                //     console.log(err.response.data);
-                // })
+                axios.post('/api/auth/login', user).then(()=> {
+                    console.log('Works');
+                }).catch((err) => {
+                    console.log(err.response.data);
+                })
             }).catch((err) => {
                 console.log(err.response);
             })
@@ -62,10 +61,6 @@ export default class SignUpForm extends React.Component{
                 <h1>Sign Up</h1>
                 <div>
                     <input name='email' type='email' placeholder='Email'
-                        onChange={(e)=>this.handleInputChange(e)}/>
-                </div>
-                <div>
-                    <input name='userName' type='text' placeholder='User Name' 
                         onChange={(e)=>this.handleInputChange(e)}/>
                 </div>
                 <div>
