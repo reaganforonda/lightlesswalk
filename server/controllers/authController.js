@@ -1,12 +1,16 @@
 const bcrypt = require('bcrypt');
-
+const generalUtil = require('../../src/utilities/genUtil');
 
 module.exports = {
     register: async (req, res, next) => {
         
         const db = req.app.get('db');
-        const {userName, firstName, lastName, email, password, confirmPW} = req.body;
+        const {firstName, lastName, email, password, confirmPW} = req.body;
 
+        if(!generalUtil.validateEmail(email)) {
+            res.status(400).sent('Invalid Email');
+            next();
+        }
         
         if(password !== confirmPW) {
             res.sendStatus(500);
@@ -20,7 +24,7 @@ module.exports = {
                 const salt = bcrypt.genSaltSync(10);
                 const hash = bcrypt.hashSync(confirmPW, salt);
 
-                db.CREATE_USER([userName.toLowerCase(), firstName.toLowerCase(), lastName.toLowerCase(), email.toLowerCase(), hash]).then((result) => {
+                db.CREATE_USER([firstName.toLowerCase(), lastName.toLowerCase(), email.toLowerCase(), hash]).then((result) => {
                     res.sendStatus(200);
                     next();
                 }).catch((err) => {
@@ -47,8 +51,8 @@ module.exports = {
                 const confirmedPW = bcrypt.compareSync(password, userPW);
 
                 if(confirmedPW) {
-                    // TODO:
-                    res.sendStatus(200);
+                    req.session.user.email = email;
+                    res.status(200).send(user[0]);
                 }
             }
         }).catch((err) => {
