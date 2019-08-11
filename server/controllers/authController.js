@@ -8,7 +8,7 @@ module.exports = {
         const {firstName, lastName, email, password, confirmPW} = req.body;
 
         if(!generalUtil.validateEmail(email)) {
-            res.status(400).sent('Invalid Email');
+            res.status(400).send('Invalid Email');
             next();
         }
         
@@ -59,5 +59,19 @@ module.exports = {
             console.log(`Error while attemptint to login: ${err}`)
             res.sendStatus(500);
         })
+    },
+
+    logout: (req, res) => {
+        req.session.destroy();
+        res.sendStatus(200);
+    },
+
+    validate: (req, res) => {
+        let user = req.session.user;
+        if(req.session.user.user_id) {
+            res.status(200).send(user);
+        } else {
+            res.status(400).send("Unauthorized User")
+        }
     }
 }
