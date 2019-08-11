@@ -31,9 +31,9 @@ export default class SignUpForm extends React.Component{
             
             axios.post('/api/auth/register', user).then(()=> {
                 axios.post('/api/auth/login', user).then(()=> {
-                    console.log('Works');
+                    // TODO:
                 }).catch((err) => {
-                    console.log(err.response.data);
+                    console.log(err.response)
                 })
             }).catch((err) => {
                 console.log(err.response);
@@ -46,7 +46,6 @@ export default class SignUpForm extends React.Component{
     resetForm() {
         this.setState({
             email: '',
-            userName: '',
             firstName: '',
             lastName: '',
             password:'',
