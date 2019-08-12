@@ -28,13 +28,9 @@ export default class SignUpForm extends React.Component{
         
         if(this.state.password === this.state.confirmPW) {
             let user = Object.assign({}, this.state);
-            
-            axios.post('/api/auth/register', user).then(()=> {
-                axios.post('/api/auth/login', user).then(()=> {
-                    // TODO:
-                }).catch((err) => {
-                    console.log(err.response)
-                })
+            console.log(user);
+            axios.post('/api/auth/register', user).then(()=> {    
+
             }).catch((err) => {
                 console.log(err.response);
             })

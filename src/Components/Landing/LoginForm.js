@@ -23,8 +23,8 @@ export default class LoginForm extends React.Component{
 
         let user=Object.assign({}, this.state);
 
-        axios.post('/api/auth/login', user).then(()=> {
-            console.log("success");
+        axios.post('/api/auth/login', user).then((user)=> {
+            this.props.push('/main');
         }).catch((err) => {
             console.log(err.response.data)
         })

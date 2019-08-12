@@ -3,36 +3,39 @@ const generalUtil = require('../../src/utilities/genUtil');
 
 module.exports = {
     register: async (req, res, next) => {
-        
+
         const db = req.app.get('db');
         const {firstName, lastName, email, password, confirmPW} = req.body;
+        
 
         if(!generalUtil.validateEmail(email)) {
-            res.status(400).send('Invalid Email');
-            next();
+            res.sendStatus(400);
         }
         
         if(password !== confirmPW) {
-            res.sendStatus(500);
+            res.sendStatus(400);
         }
 
         await db.CHECK_USER([email.toLowerCase()]).then((users)=> {
             if(users.length !== 0) {
-                res.sendStatus(400);
+                if(users[0].email === email.toLowerCase()){
+                    res.sendStatus(400);
+                } else {
+                    res.sendStatus(401);
+                }
             } else {
-                
                 const salt = bcrypt.genSaltSync(10);
                 const hash = bcrypt.hashSync(confirmPW, salt);
 
                 db.CREATE_USER([firstName.toLowerCase(), lastName.toLowerCase(), email.toLowerCase(), hash]).then((result) => {
                     res.sendStatus(200);
-                    next();
                 }).catch((err) => {
-                    console.log(`Server error while attempting to create a new user: ${err}`);
                     res.sendStatus(500);
+                    console.log(`Server error while attempting to create a new user: ${err}`);
                 })
             }
         }).catch((err) => {
+            res.sendStatus(500);
             console.log(`Error while attempting to check user: ${err}`)
         })
     },
@@ -40,6 +43,7 @@ module.exports = {
     login: (req, res) => {
         const db = req.app.get('db');
         const {email, password} = req.body;
+        console.log('hit');
 
         db.CHECK_USER([email.toLowerCase()]).then((user) => {
             if(user.length === 0) {
